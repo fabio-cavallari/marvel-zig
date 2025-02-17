@@ -1,4 +1,4 @@
-package com.example.comics.presentation
+package com.example.comics.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.comics.databinding.FragmentHomeBinding
 import com.example.comics.domain.models.Comic
+import com.example.comics.presentation.adapter.Adapter
+import com.example.comics.presentation.viewmodel.HomeViewModel
 import com.example.comics.util.UiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment: Fragment(), IView {
+class HomeFragment: Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -36,9 +38,9 @@ class HomeFragment: Fragment(), IView {
         lifecycleScope.launch {
             viewModel.uiState.collectLatest { uiState ->
                 when (uiState) {
-                    is UiState.Error -> error()
+                    is UiState.Error -> setupError()
                     is UiState.Loading -> binding.swipeRefresh.isRefreshing = true
-                    is UiState.Success -> viewList(uiState.data)
+                    is UiState.Success -> setupComicsList(uiState.data)
                 }
             }
         }
@@ -46,26 +48,26 @@ class HomeFragment: Fragment(), IView {
         viewModel.getComics()
     }
     private fun swipeList() = with(binding.swipeRefresh) {
-        this.setOnRefreshListener {
+        setOnRefreshListener {
             viewModel.getComics()
         }
     }
 
-    override fun viewList(list: List<Comic>) {
+    private fun setupComicsList(list: List<Comic>) {
         with(binding) {
-            this.errorTV.visibility = View.GONE
-            this.listItem.visibility = View.VISIBLE
-            this.listItem.adapter = Adapter(list)
-            this.listItem.layoutManager = LinearLayoutManager(context)
-            this.swipeRefresh.isRefreshing = false
+            errorTV.visibility = View.GONE
+            listItem.visibility = View.VISIBLE
+            listItem.adapter = Adapter(list)
+            listItem.layoutManager = LinearLayoutManager(context)
+            swipeRefresh.isRefreshing = false
         }
     }
 
-    override fun error() {
+    private fun setupError() {
         with(binding) {
-            this.listItem.visibility = View.GONE
-            this.errorTV.visibility = View.VISIBLE
-            this.swipeRefresh.isRefreshing = false
+            listItem.visibility = View.GONE
+            errorTV.visibility = View.VISIBLE
+            swipeRefresh.isRefreshing = false
         }
     }
 }

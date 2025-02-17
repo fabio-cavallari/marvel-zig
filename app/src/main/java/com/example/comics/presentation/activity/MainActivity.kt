@@ -1,9 +1,10 @@
-package com.example.comics.presentation
+package com.example.comics.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.commit
 import com.example.comics.databinding.ActivityMainBinding
+import com.example.comics.presentation.fragment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
