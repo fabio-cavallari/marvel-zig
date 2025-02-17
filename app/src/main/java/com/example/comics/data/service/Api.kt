@@ -1,5 +1,6 @@
-package com.example.comics.repository
+package com.example.comics.data.service
 
+import com.example.comics.data.dto.ItemModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

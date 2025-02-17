@@ -1,4 +1,4 @@
-package com.example.comics.repository
+package com.example.comics.data.dto
 
 data class ItemModel(
     val data: DataModel

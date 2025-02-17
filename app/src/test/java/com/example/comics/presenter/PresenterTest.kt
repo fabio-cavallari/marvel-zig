@@ -1,8 +1,8 @@
 package com.example.comics.presenter
 
 import com.example.comics.CoroutinesTestRule
-import com.example.comics.repository.DataModel
-import com.example.comics.repository.ItemModel
+import com.example.comics.data.dto.DataModel
+import com.example.comics.data.dto.ItemModel
 import com.example.comics.presentation.IView
 import io.mockk.called
 import io.mockk.coVerify

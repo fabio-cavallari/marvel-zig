@@ -5,25 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.comics.databinding.FragmentHomeBinding
+import com.example.comics.domain.models.Comic
 import com.example.comics.interactor.Interactor
 import com.example.comics.presenter.Presenter
+import com.example.comics.util.UiState
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeFragment: Fragment(), IView {
 
-    private val interactor: Interactor = Interactor(Presenter(this))
-
     private lateinit var binding: FragmentHomeBinding
+
+    private val viewModel: HomeViewModel by viewModels()
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         FragmentHomeBinding.inflate(layoutInflater, container, false).also {
             binding = it
         }
@@ -32,24 +37,25 @@ class HomeFragment: Fragment(), IView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipeList()
-        refrash()
+        lifecycleScope.launch {
+            viewModel.uiState.collectLatest { uiState ->
+                when (uiState) {
+                    is UiState.Error -> error()
+                    is UiState.Loading -> binding.swipeRefresh.isRefreshing = true
+                    is UiState.Success -> viewList(uiState.data)
+                }
+            }
+        }
+
+        viewModel.getComics()
     }
     private fun swipeList() = with(binding.swipeRefresh) {
         this.setOnRefreshListener {
-            refrash()
+            viewModel.getComics()
         }
     }
 
-    override fun refrash() {
-        with(binding) {
-            this.swipeRefresh.isRefreshing = true
-            lifecycle.coroutineScope.launch {
-                interactor.getComics()
-            }
-        }
-    }
-
-    override fun viewList(list: List<ItemVO>) {
+    override fun viewList(list: List<Comic>) {
         with(binding) {
             this.errorTV.visibility = View.GONE
             this.listItem.visibility = View.VISIBLE
