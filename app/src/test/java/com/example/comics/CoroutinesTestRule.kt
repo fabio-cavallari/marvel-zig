@@ -2,20 +2,24 @@ package com.example.comics
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.rules.TestRule
+import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.junit.runners.model.Statement
 
-@ExperimentalCoroutinesApi
-class CoroutinesTestRule : TestRule {
+class CoroutinesTestRule : TestWatcher() {
 
-    private val dispatcher = TestCoroutineDispatcher()
+    private val dispatcher = UnconfinedTestDispatcher()
 
-    override fun apply(base: Statement, description: Description): Statement = object : Statement() {
-        override fun evaluate() {
-            Dispatchers.setMain(dispatcher)
-        }
+    override fun starting(description: Description) {
+        super.starting(description)
+        Dispatchers.setMain(dispatcher)
     }
+
+    override fun finished(description: Description) {
+        super.finished(description)
+        Dispatchers.resetMain()
+    }
+
 }
