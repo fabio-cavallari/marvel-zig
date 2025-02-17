@@ -1,7 +1,8 @@
 package com.example.comics.presentation
 
 import android.app.Application
-import com.example.comics.util.appModule
+import com.example.comics.util.homeModule
+import com.example.comics.util.networkModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -10,7 +11,7 @@ class MainApplication: Application() {
         super.onCreate()
         startKoin {
             androidContext(this@MainApplication)
-            modules(appModule)
+            modules(listOf(homeModule, networkModules))
         }
     }
 }
