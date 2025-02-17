@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val homeModule = module {
     factory<ComicsRepository> { ComicsRepositoryImpl(get()) }
     factory<GetComicsUseCase> { GetComicsUseCase(get()) }
-    viewModel<HomeViewModel> { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get()) }
 }
 
 val networkModules = module {

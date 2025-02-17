@@ -15,7 +15,12 @@ class HomeViewModel(
     private val _uiState : MutableStateFlow<UiState<List<Comic>>> = MutableStateFlow(UiState.Loading())
     val uiState get() = _uiState
 
+    init {
+        getComics()
+    }
+
     fun getComics() {
+        _uiState.value = UiState.Loading()
         viewModelScope.launch {
             val comicsResult = getComicsUseCase()
             when (comicsResult) {

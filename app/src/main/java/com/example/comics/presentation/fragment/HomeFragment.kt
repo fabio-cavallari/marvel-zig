@@ -16,11 +16,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment: Fragment() {
+
+class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel by viewModel<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,22 +33,26 @@ class HomeFragment: Fragment() {
         }
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        swipeList()
+        setupSwipeList()
+        setupCollect()
+    }
+
+    private fun setupCollect() {
         lifecycleScope.launch {
             viewModel.uiState.collectLatest { uiState ->
                 when (uiState) {
-                    is UiState.Error -> setupError()
-                    is UiState.Loading -> binding.swipeRefresh.isRefreshing = true
+                    is UiState.Error -> setupErrorState()
+                    is UiState.Loading -> setupLoadingState()
                     is UiState.Success -> setupComicsList(uiState.data)
                 }
             }
         }
-
-        viewModel.getComics()
     }
-    private fun swipeList() = with(binding.swipeRefresh) {
+
+    private fun setupSwipeList() = with(binding.swipeRefresh) {
         setOnRefreshListener {
             viewModel.getComics()
         }
@@ -63,11 +68,15 @@ class HomeFragment: Fragment() {
         }
     }
 
-    private fun setupError() {
+    private fun setupErrorState() {
         with(binding) {
             listItem.visibility = View.GONE
             errorTV.visibility = View.VISIBLE
             swipeRefresh.isRefreshing = false
         }
+    }
+
+    private fun setupLoadingState() {
+        binding.swipeRefresh.isRefreshing = true
     }
 }
