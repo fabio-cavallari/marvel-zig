@@ -4,7 +4,7 @@ import com.example.comics.CoroutinesTestRule
 import com.example.comics.presenter.IPresenter
 import com.example.comics.data.dto.DataModel
 import com.example.comics.data.dto.ItemModel
-import com.example.comics.data.repository.Repository
+import com.example.comics.data.repository.ComicsRepositoryImpl
 import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -28,11 +28,11 @@ class InteractorTest {
     private lateinit var interactor: Interactor
 
     private val iPresenter: IPresenter = mockk(relaxed = true)
-    private val repository: Repository = mockk(relaxed = true)
+    private val comicsRepository: ComicsRepositoryImpl = mockk(relaxed = true)
 
     @Before
     fun setup() {
-        interactor = Interactor(iPresenter, repository)
+        interactor = Interactor(iPresenter, comicsRepository)
     }
 
     @After
@@ -42,7 +42,7 @@ class InteractorTest {
 
     @Test
     fun `when execute api getComics return mock success`() = runBlocking {
-        coEvery { repository.getComics() } returns ItemModel(data = DataModel(results = listOf()))
+        coEvery { comicsRepository.getComics() } returns ItemModel(data = DataModel(results = listOf()))
 
         interactor.getComics()
 
@@ -52,7 +52,7 @@ class InteractorTest {
 
     @Test
     fun `when execute api getComics return mock error`() = runBlocking {
-        coEvery { repository.getComics() } throws Exception(MOCK_EXCEPTION)
+        coEvery { comicsRepository.getComics() } throws Exception(MOCK_EXCEPTION)
 
         interactor.getComics()
 

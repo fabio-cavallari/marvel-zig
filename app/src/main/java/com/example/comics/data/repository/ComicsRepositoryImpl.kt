@@ -1,17 +1,17 @@
 package com.example.comics.data.repository
 
-import com.example.comics.data.dto.ItemModel
 import com.example.comics.data.mapper.toComicModelList
 import com.example.comics.data.service.Api
 import com.example.comics.domain.models.Comic
+import com.example.comics.domain.repository.ComicsRepository
 import com.example.comics.util.Result
 import com.example.comics.util.safeRunDispatcher
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Repository {
-    suspend fun getComics(): Result<List<Comic>> {
+class ComicsRepositoryImpl: ComicsRepository {
+    override suspend fun getComics(): Result<List<Comic>> {
         val result = safeRunDispatcher {
             Retrofit.Builder()
                 .baseUrl("https://gateway.marvel.com/v1/public/")
