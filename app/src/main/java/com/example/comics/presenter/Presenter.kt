@@ -1,8 +1,8 @@
 package com.example.comics.presenter
 
 import com.example.comics.repository.ItemModel
-import com.example.comics.view.IView
-import com.example.comics.view.ItemVO
+import com.example.comics.presentation.IView
+import com.example.comics.presentation.ItemVO
 
 class Presenter(private val iview: IView) : IPresenter {
 
