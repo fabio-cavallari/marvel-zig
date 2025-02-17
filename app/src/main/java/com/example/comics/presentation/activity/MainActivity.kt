@@ -1,7 +1,7 @@
 package com.example.comics.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.example.comics.databinding.ActivityMainBinding
 import com.example.comics.presentation.fragment.HomeFragment
@@ -14,9 +14,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportFragmentManager.commit {
-            replace(binding.fragmentContainer.id, HomeFragment())
-            addToBackStack(null)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                replace(binding.fragmentContainer.id, HomeFragment())
+                addToBackStack(null)
+            }
         }
     }
 }
