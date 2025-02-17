@@ -2,7 +2,6 @@ package com.example.comics.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.comics.data.dto.ResultModel
 import com.example.comics.domain.GetComicsUseCase
 import com.example.comics.domain.models.Comic
 import com.example.comics.util.Result
