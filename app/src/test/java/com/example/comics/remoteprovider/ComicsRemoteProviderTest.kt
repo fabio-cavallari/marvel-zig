@@ -1,7 +1,7 @@
 package com.example.comics.remoteprovider
 
 import com.example.comics.utils.CoroutinesTestRule
-import com.example.comics.data.dto.ItemModel
+import com.example.comics.data.dto.ComicResponseDto
 import com.example.comics.data.network.client.MarvelClient
 import com.example.comics.data.network.service.ComicsRemoteProviderImpl
 import io.mockk.coEvery
@@ -24,7 +24,7 @@ class ComicsRemoteProviderTest {
     @Test
     fun `getComics should return response and no exception when client call is successful`() = runBlocking {
         // GIVEN
-        val fakeSuccessRetrofitResponse: Response<ItemModel> = mockk()
+        val fakeSuccessRetrofitResponse: Response<ComicResponseDto> = mockk()
         coEvery { mockClient.getComics(any(), any(), any()) } returns fakeSuccessRetrofitResponse
 
         // WHEN

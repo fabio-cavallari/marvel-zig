@@ -1,26 +1,26 @@
 package com.example.comics.utils
 
-import com.example.comics.data.dto.DataModel
-import com.example.comics.data.dto.ItemModel
-import com.example.comics.data.dto.ResultModel
-import com.example.comics.data.dto.ThumbnailModel
+import com.example.comics.data.dto.ComicDataDto
+import com.example.comics.data.dto.ComicResponseDto
+import com.example.comics.data.dto.ComicDto
+import com.example.comics.data.dto.ThumbnailDto
 import com.example.comics.data.mapper.toComicModelList
 
-val fakeItemModel = ItemModel(
-    data = DataModel(
+val fakeItemModel = ComicResponseDto(
+    data = ComicDataDto(
         results = listOf(
-            ResultModel(
+            ComicDto(
                 title = "title",
                 description = "description",
-                thumbnail = ThumbnailModel(
+                thumbnail = ThumbnailDto(
                     path = "path",
                     extension = "extension"
                 )
             ),
-            ResultModel(
+            ComicDto(
                 title = "title b",
                 description = "description b",
-                thumbnail = ThumbnailModel(
+                thumbnail = ThumbnailDto(
                     path = "path b",
                     extension = "extension b"
                 )

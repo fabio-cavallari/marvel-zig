@@ -1,6 +1,6 @@
 package com.example.comics.repository
 
-import com.example.comics.data.dto.ItemModel
+import com.example.comics.data.dto.ComicResponseDto
 import com.example.comics.data.mapper.toComicModelList
 import com.example.comics.data.network.service.ComicsRemoteProvider
 import com.example.comics.data.repository.ComicsRepositoryImpl
@@ -47,7 +47,7 @@ class ComicsRepositoryTest {
     @Test
     fun `getComics should return Failure when api response is unsuccessful`() = runBlocking {
         // GIVEN
-        val fakeRetrofitResponse = Response.error<ItemModel>(500, mockk(relaxed = true))
+        val fakeRetrofitResponse = Response.error<ComicResponseDto>(500, mockk(relaxed = true))
         coEvery { remoteProvider.getComics() } returns fakeRetrofitResponse
 
         // WHEN
