@@ -1,9 +1,9 @@
 package com.example.comics.remoteprovider
 
-import com.example.comics.utils.CoroutinesTestRule
 import com.example.comics.data.dto.ComicResponseDto
 import com.example.comics.data.network.client.MarvelClient
 import com.example.comics.data.network.service.ComicsRemoteProviderImpl
+import com.example.comics.utils.CoroutinesTestRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -35,7 +35,7 @@ class ComicsRemoteProviderTest {
         coVerify(exactly = 1) { mockClient.getComics(any(), any(), any()) }
     }
     @Test
-    fun `getComics should return exception and no ItemModel when client call fails`() = runBlocking {
+    fun `getComics should return exception and no ComicResponseDto when client call fails`() = runBlocking {
         // GIVEN
         val fakeException = RuntimeException("Unexpected error")
         coEvery { mockClient.getComics(any(), any(), any()) } throws fakeException

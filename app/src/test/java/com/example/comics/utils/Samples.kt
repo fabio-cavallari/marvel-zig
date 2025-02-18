@@ -1,12 +1,12 @@
 package com.example.comics.utils
 
 import com.example.comics.data.dto.ComicDataDto
-import com.example.comics.data.dto.ComicResponseDto
 import com.example.comics.data.dto.ComicDto
+import com.example.comics.data.dto.ComicResponseDto
 import com.example.comics.data.dto.ThumbnailDto
 import com.example.comics.data.mapper.toComicModelList
 
-val fakeItemModel = ComicResponseDto(
+val fakeComicResponse = ComicResponseDto(
     data = ComicDataDto(
         results = listOf(
             ComicDto(
@@ -29,4 +29,4 @@ val fakeItemModel = ComicResponseDto(
     )
 )
 
-val fakeComicList = fakeItemModel.data.results.toComicModelList()
+val fakeComicList = fakeComicResponse.data.results.toComicModelList()
