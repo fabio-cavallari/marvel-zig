@@ -1,6 +1,6 @@
 package com.example.comics.remoteprovider
 
-import com.example.comics.CoroutinesTestRule
+import com.example.comics.utils.CoroutinesTestRule
 import com.example.comics.data.dto.ItemModel
 import com.example.comics.data.network.client.MarvelClient
 import com.example.comics.data.network.service.ComicsRemoteProviderImpl

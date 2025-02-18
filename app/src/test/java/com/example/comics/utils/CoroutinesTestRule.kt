@@ -1,4 +1,4 @@
-package com.example.comics
+package com.example.comics.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

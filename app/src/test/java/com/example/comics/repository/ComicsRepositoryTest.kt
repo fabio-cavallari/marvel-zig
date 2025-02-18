@@ -1,15 +1,13 @@
 package com.example.comics.repository
 
-import com.example.comics.CoroutinesTestRule
-import com.example.comics.data.dto.DataModel
 import com.example.comics.data.dto.ItemModel
-import com.example.comics.data.dto.ResultModel
-import com.example.comics.data.dto.ThumbnailModel
 import com.example.comics.data.mapper.toComicModelList
 import com.example.comics.data.network.service.ComicsRemoteProvider
 import com.example.comics.data.repository.ComicsRepositoryImpl
 import com.example.comics.util.Result.Failure
 import com.example.comics.util.Result.Success
+import com.example.comics.utils.CoroutinesTestRule
+import com.example.comics.utils.fakeItemModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -26,28 +24,6 @@ class ComicsRepositoryTest {
 
     private val remoteProvider: ComicsRemoteProvider = mockk(relaxed = true)
     private val repository = ComicsRepositoryImpl(remoteProvider)
-    private val fakeItemModel = ItemModel(
-        data = DataModel(
-            results = listOf(
-                ResultModel(
-                    title = "title",
-                    description = "description",
-                    thumbnail = ThumbnailModel(
-                        path = "path",
-                        extension = "extension"
-                    )
-                ),
-                ResultModel(
-                    title = "title b",
-                    description = "description b",
-                    thumbnail = ThumbnailModel(
-                        path = "path b",
-                        extension = "extension b"
-                    )
-                ),
-            )
-        )
-    )
 
     @Test
     fun `getComics should return Success when api call is successful`() = runBlocking {
